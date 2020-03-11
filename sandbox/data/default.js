@@ -1,32 +1,32 @@
 module.exports = {
     links: [
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "Chenjesu",
         },
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "Ilwrath",
         },
         {
-            source: "Androsynth",
-            target: "Mycon",
+            source: "AndrosynthThis",
+            target: "Michintoshi",
         },
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "Spathi",
         },
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "Umgah",
         },
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "VUX",
         },
         {
             source: "Chenjesu",
-            target: "Mycon",
+            target: "Michintoshi",
         },
         {
             source: "Chenjesu",
@@ -53,11 +53,11 @@ module.exports = {
             target: "VUX",
         },
         {
-            source: "Mycon",
+            source: "Michintoshi",
             target: "Umgah",
         },
         {
-            source: "Mycon",
+            source: "Michintoshi",
             target: "VUX",
         },
         {
@@ -65,7 +65,7 @@ module.exports = {
             target: "VUX",
         },
         {
-            source: "Androsynth",
+            source: "AndrosynthThis",
             target: "Guardian",
         },
         {
@@ -77,7 +77,7 @@ module.exports = {
             target: "Avenger",
         },
         {
-            source: "Mycon",
+            source: "Michintoshi",
             target: "Podship",
         },
         {
@@ -95,29 +95,33 @@ module.exports = {
     ],
     nodes: [
         {
-            id: "Androsynth",
+            id: "AndrosynthThis",
+            configured: true,
+            selected: true,
         },
         {
             id: "Chenjesu",
         },
         {
             id: "Ilwrath",
+            configured: true,
         },
         {
-            id: "Mycon",
+            id: "Michintoshi",
         },
         {
             id: "Spathi",
         },
         {
             id: "Umgah",
+            configured: true,
         },
         {
             id: "VUX",
+            configured: true,
         },
         {
             id: "Guardian",
-            symbolType: "square",
         },
         {
             id: "Broodhmome",

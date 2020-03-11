@@ -87,62 +87,59 @@ export default class Node extends React.Component {
             opacity: this.props.opacity,
         };
 
+        let labelX = -15;
+        let labelY = 2;
+        let label = this.props.label;
+
+        if (this.props.label.length < 9) {
+            //can show one line
+            labelX = -15 - (this.props.label.length - 7) * 2;
+        } else if (this.props.label.length < 20) {
+            labelX = -18;
+            labelY = -2;
+        }
+
         const textProps = {
-            dx: this.props.dx || CONST.NODE_LABEL_DX,
-            dy: CONST.NODE_LABEL_DY,
+            dx: labelX,
+            dy: labelY,
             fill: this.props.fontColor,
             fontSize: this.props.fontSize,
             fontWeight: this.props.fontWeight,
             opacity: this.props.opacity,
         };
 
-        const size = this.props.size;
+        const size = 1500;
 
         let gtx = this.props.cx,
             gty = this.props.cy,
-            label = null,
-            node = null;
+            node = null,
+            symbol = null;
 
-        if (this.props.svg || this.props.viewGenerator) {
-            const height = size / 10;
-            const width = size / 10;
-            const tx = width / 2;
-            const ty = height / 2;
-            const transform = `translate(${tx},${ty})`;
+        nodeProps.d = nodeHelper.buildSvgSymbol(size);
+        nodeProps.fill = this.props.fill;
+        nodeProps.stroke = this.props.selected ? this.props.selectedColor || "green" : "none";
+        nodeProps.strokeWidth = this.props.selected ? 2 : this.props.strokeWidth;
 
-            label = (
-                <text {...textProps} transform={transform}>
-                    {this.props.label}
-                </text>
-            );
+        const textProps1 = Object.assign({}, textProps);
+        textProps1.dy = 6;
+        textProps1.dx = -15 - (this.props.label.length - 15) * 2;
+        let label1 = null;
 
-            // By default, if a view generator is set, it takes precedence over any svg image url
-            if (this.props.viewGenerator && !this.props.overrideGlobalViewGenerator) {
-                node = (
-                    <svg {...nodeProps} width={width} height={height}>
-                        <foreignObject x="0" y="0" width="100%" height="100%">
-                            <section style={{ height, width, backgroundColor: "transparent" }}>
-                                {this.props.viewGenerator(this.props)}
-                            </section>
-                        </foreignObject>
-                    </svg>
-                );
-            } else {
-                node = <image {...nodeProps} href={this.props.svg} width={width} height={height} />;
-            }
-
-            // svg offset transform regarding svg width/height
-            gtx -= tx;
-            gty -= ty;
-        } else {
-            nodeProps.d = nodeHelper.buildSvgSymbol(size, this.props.type);
-            nodeProps.fill = this.props.fill;
-            nodeProps.stroke = this.props.stroke;
-            nodeProps.strokeWidth = this.props.strokeWidth;
-
-            label = <text {...textProps}>{this.props.label}</text>;
-            node = <path {...nodeProps} />;
+        if (label.length >= 9) {
+            label1 = <text {...textProps1}>{this.props.label.slice(8, this.props.label.length - 1)}</text>;
         }
+
+        label = <text {...textProps}>{label.length >= 9 ? label.slice(0, 8) : label}</text>;
+
+        node = <path {...nodeProps} />;
+
+        const symbolProps = {
+            transform: `translate(${0},${17})`,
+        };
+
+        symbolProps.d = nodeHelper.buildSvgSymbol(5);
+        symbolProps.fill = this.props.configured ? this.props.configuredColor || "green" : "transparent";
+        symbol = <path {...symbolProps} />;
 
         const gProps = {
             className: this.props.className,
@@ -155,7 +152,9 @@ export default class Node extends React.Component {
         return (
             <g {...gProps}>
                 {node}
+                {symbol}
                 {this.props.renderLabel && label}
+                {label1}
             </g>
         );
     }
